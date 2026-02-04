@@ -102,7 +102,7 @@ Cost Optimization is a continuous process. By using AWS Cost Explorer, cost tags
 
 --- 
 
-## 10. References
+## 11. References
 
 | Descriptions | Links |
 |-------------|------|
