@@ -86,7 +86,3 @@ DevOps repositories help identify and manage all required repositories in the VC
 | Internal DevOps Guidelines | [Internal DevOps Guidelines](https://confluence.atlassian.com/) |
 
 ---
-
-**Objective:**  
-Identifying all the repositories that we should have in our VCS.
-
