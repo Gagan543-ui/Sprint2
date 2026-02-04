@@ -29,6 +29,7 @@
   - [3.4 Advantages of Microrepo](#34-advantages-of-microrepo)
   - [3.5 Challenges / Disadvantages of Microrepo](#35-challenges-/-disadvantages-of-microrepo)
   - [3.6 Typical Microrepo Workflow](#36-typical-microrepo-workflow)
+- [4. Monorepo vs Multirepo Comparison](#4-monorepo-vs-multirepo-comparison)
 - [4. Conclusion](#4-conclusion)
 - [5. Contact Information](#5-contact-information)
 - [6. References](#6-references)
@@ -175,8 +176,22 @@ This approach is preferred for large, distributed teams and enterprise-scale sys
 5. Version updates communicated to dependent services  
 
 ---
+## 4. Monorepo vs Multirepo Comparison
 
-## 4. Conclusion
+| Point | Monorepo | Multirepo |
+|------|---------|-----------|
+| **Structure** | All projects are kept in one single repository. | Each project has its own separate repository. |
+| **Code Sharing** | Common code can be shared easily in one place. | Code sharing needs packages or copying code. |
+| **Dependencies** | Dependencies are managed together for all projects. | Each project manages its own dependencies. |
+| **CI/CD** | One pipeline; changes may affect many projects. | Separate pipelines; faster and safer builds. |
+| **Team Work** | Teams can easily see and work on all code. | Teams work independently on their own projects. |
+| **Versioning** | One common versioning approach. | Each project has its own version. |
+| **Scalability** | Good for small or medium teams. | Better for large teams and microservices. |
+
+
+
+
+## 5. Conclusion
 
 From a strategic standpoint:
 
@@ -194,7 +209,7 @@ In many mature organizations, a **hybrid approach** is also adopted, combining b
 
 ---
 
-## 5. Contact Information
+## 6. Contact Information
 
 | Name            | Team    | Contact Type | Details |
 | --------------- | ------- | ------------ | ------- |
@@ -203,7 +218,7 @@ In many mature organizations, a **hybrid approach** is also adopted, combining b
 
 ---
 
-## 6. References
+## 7. References
 
 | Descriptions | Links |
 |-------------|------|
