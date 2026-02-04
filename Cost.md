@@ -46,10 +46,7 @@ Cost Optimization is important because:
 
 ## 4. Workflow Diagram
 
-
-![alt text](image-1.png)
-
----
+<img width="600" height="600" alt="image" src="https://github.com/user-attachments/assets/6797c317-51e0-4713-a472-99463b25bdd2" />
 
 ---
 
