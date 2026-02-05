@@ -32,7 +32,7 @@ A DevOps repository is a central place in a version control system where teams s
 
 ---
 
-## 3. Why DevOps Repositories Are Needed  
+## 3. Why DevOps Repositories Are Needed?
 DevOps repositories are needed to maintain consistency, track changes, and enable teamwork. They help development and operations teams work together smoothly and reduce errors during deployment.
 
 ---
