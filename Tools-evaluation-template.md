@@ -1,255 +1,235 @@
-# Tools Comparison & Recommendation – SOP
+# Software Template
 
 ---
 
-## Document Control
+## Document Information
 
-| Author | Created On | Version | Last Updated By | Last Edited On |
-|------|------------|---------|----------------|---------------|
-| ABC  | DD-MM-YYYY | 1.0     | ABC            | DD-MM-YYYY    |
-
----
-
-## 1. Purpose
-
-This document defines a standardized approach for evaluating, comparing, and recommending tools that address the same functional or technical use case.  
-The objective is to ensure consistent, transparent, and well-governed tool selection aligned with organizational software and application standards.
+| Author          | Created    | Version | Last updated by | Last Edited On | L0 Reviewer  | L1 Reviewer | L2 Reviewer |
+|-----------------|------------|---------|-----------------|---------------|--------------|-------------|-------------|
+| Shreyas Awasthi | 2026-02-09 | 1.0     | Shreyas Awasthi | 2026-02-09    | Divya Mishra | Pritam      |             |
 
 ---
 
-## 2. Scope
+## Table of Contents
 
-This SOP applies to tools evaluated across the software and application lifecycle, including:
-
-- CI/CD tools  
-- Monitoring and observability tools  
-- Configuration management tools  
-- Logging and security tools  
-
-The evaluation covers functional, operational, security, performance, and maintainability aspects.
-
----
-
-## 3. Definitions
-
-| Term | Description |
-|----|------------|
-| Tool Evaluation | Process of assessing tools against predefined criteria |
-| HA | High Availability |
-| DR | Disaster Recovery |
-| SOP | Standard Operating Procedure |
-
----
-
-## 4. Problem Statement / Use Case
-
-Describe the business or technical requirement that initiated the tool evaluation.  
-Clearly outline existing challenges, gaps, or limitations that the selected tool must address.
+1. [Introduction](#1-introduction)
+2. [Purposes](#2-purposes)
+3. [Key Features](#3-key-features)
+4. [Getting Started](#4-getting-started)
+5. [Pre-requisites](#5-pre-requisites)
+6. [Software Overview](#6-software-overview)
+7. [System Requirement](#7-system-requirement)
+8. [Important Ports](#8-important-ports)
+9. [Dependencies](#9-dependencies)
+   - 9.1 [Run-time Dependency](#91-run-time-dependency)
+   - 9.2 [Other Dependency](#92-other-dependency)
+10. [How to Setup / Install Software Name](#10-how-to-setup--install-software-name)
+11. [Configuration](#11-configuration)
+12. [Maintenance](#12-maintenance)
+13. [Monitoring](#13-monitoring)
+14. [Disaster Recovery](#14-disaster-recovery)
+15. [High Availability](#15-high-availability)
+16. [Troubleshooting](#16-troubleshooting)
+17. [FAQs](#17-faqs)
+18. [Contact Information](#18-contact-information)
+19. [References](#19-references)
 
 ---
 
-## 5. Tools Under Evaluation
+## 1. Introduction
 
-| Tool Name | Version | Vendor / Community | License Type |
-|---------|---------|--------------------|--------------|
-| Tool A  | x.x     | Vendor / OSS       | Apache / GPL |
-| Tool B  | x.x     | Vendor / OSS       | Commercial   |
-| Tool C  | x.x     | Vendor / OSS       | MIT          |
+This document provides a standardized software documentation template to ensure consistency, clarity, and maintainability across software projects.
 
 ---
 
-## 6. Licensing & Compliance
+## 2. Purposes
 
-| Tool | License Type | Commercial Usage | Open Source |
-|----|--------------|------------------|-------------|
-| Tool A | Apache 2.0 | Yes | Yes |
-| Tool B | Proprietary | Yes | No |
-| Tool C | MIT | Yes | Yes |
+The purpose of this document is to explain why the software exists, what problem it solves, and how it delivers value from a business and technical standpoint.
 
 ---
 
-## 7. System Requirements
+## 3. Key Features
 
-### 7.1 Hardware Requirements
+| Feature | Description |
+|-------|-------------|
+| Core Functionality | Primary capability of the software |
+| Security | Authentication, authorization, and data protection |
+| Scalability | Handles increasing workloads efficiently |
+| Integration | Compatible with external tools and services |
 
-| Parameter | Minimum Requirement |
-|---------|---------------------|
+---
+
+## 4. Getting Started
+
+This section provides high-level guidance to help users begin using the software quickly and efficiently.
+
+---
+
+## 5. Pre-requisites
+
+| Component | Description |
+|---------|-------------|
+| Operating System | Linux / Windows |
+| User Access | Root or sudo privileges |
+| Network | Internet connectivity |
+| Tools | Git, Curl, Package Manager |
+
+---
+
+## 6. Software Overview
+
+| Software | Version |
+|---------|---------|
+| Example Software | v1.0.0 |
+
+---
+
+## 7. System Requirement
+
+| Requirement | Minimum Recommendation |
+|------------|------------------------|
 | Processor | Dual-Core |
-| RAM | 4 GB |
-| Disk | 20 GB |
-| OS | Linux (Ubuntu 22.04 or equivalent) |
+| RAM | 4 GB or higher |
+| Disk Space | 10 GB or higher |
+| OS | Linux (supported versions) |
 
 ---
 
-## 8. Dependencies
+## 8. Important Ports
 
-### 8.1 Run-time Dependencies
+| Port | Description |
+|------|------------|
+| 22 | SSH access |
+| 80 | HTTP traffic |
+| 443 | HTTPS secure communication |
 
-| Tool | Dependency | Version | Description |
-|----|------------|--------|-------------|
-| Tool A | Java | 11 | Runtime support |
-| Tool B | Python | 3.x | Execution environment |
+---
 
-### 8.2 Other Dependencies
+## 9. Dependencies
+
+This section lists all required dependencies needed for the software to function correctly.
+
+---
+
+## 9.1 Run-time Dependency
 
 | Dependency | Version | Description |
-|-----------|--------|-------------|
-| Database | x.x | Metadata storage |
-| Web Server | x.x | UI access |
+|------------|---------|-------------|
+| Java | 11 | Required to run the application |
+| Python | 3.8+ | Used for scripting and automation |
 
 ---
 
-## 9. Architecture Overview
+## 9.2 Other Dependency
 
-Describe how each tool integrates with the existing software or application architecture, including:
-
-- Deployment model (agent-based / agentless)  
-- Integration points  
-- Data flow between components  
-
-> Architecture diagrams can be added here if required.
+| Dependency | Version | Description |
+|------------|---------|-------------|
+| MySQL | 8.0 | Database service |
+| Redis | Latest | Cache and session storage |
 
 ---
 
-## 10. Installation & Setup Comparison
+## 10. How to Setup / Install Software Name
 
-| Tool | Installation Method | Complexity |
-|----|---------------------|------------|
-| Tool A | Package / Binary | Low |
-| Tool B | Docker / Helm | Medium |
-| Tool C | Manual | High |
+Follow the steps below to install the software.
 
----
+### Step-by-step Installation Instructions
 
-## 11. Configuration & Customization
+```bash
+# Update system packages
+sudo apt update
 
-| Tool | Configuration Approach | Flexibility |
-|----|------------------------|-------------|
-| Tool A | YAML / Config Files | High |
-| Tool B | UI + Config Files | Medium |
-| Tool C | CLI Only | Low |
+# Install software
+sudo apt install <software-name>
 
----
+# Start service
+sudo systemctl start <service-name>
 
-## 12. Functional Comparison
+```
+## 11. Configuration
 
-| Feature | Tool A | Tool B | Tool C |
-|-------|--------|--------|--------|
-| Core Functionality | Yes | Yes | Partial |
-| Integration Support | High | Medium | Low |
-| Automation | Yes | Yes | No |
-| Dashboard / UI | Yes | Yes | Limited |
+| Configuration Item | Description |
+|-------------------|-------------|
+| Config File Path  | /etc/software/config.yml |
+| Database Name     | Database name |
+| Username          | Database user |
+| Password          | Database password |
 
 ---
 
-## 13. Performance & Scalability
+## 12. Maintenance
 
-| Parameter | Tool A | Tool B | Tool C |
-|---------|--------|--------|--------|
-| Scalability | High | Medium | Low |
-| Latency | Low | Medium | High |
-| Throughput | High | Medium | Low |
-
----
-
-## 14. Security Assessment
-
-| Security Area | Tool A | Tool B | Tool C |
-|--------------|--------|--------|--------|
-| Authentication | Yes | Yes | Limited |
-| Authorization | RBAC | RBAC | None |
-| Encryption | At-Rest & In-Transit | In-Transit | In-Transit |
-| Compliance Support | Yes | Partial | No |
+| Task | Command |
+|------|---------|
+| Update packages | sudo apt update |
+| Upgrade software | sudo apt upgrade |
+| Restart service | sudo systemctl restart <service-name> |
 
 ---
 
-## 15. Monitoring & Observability
+## 13. Monitoring
 
-| Tool | Metrics | Logs | Alerts |
-|----|---------|------|--------|
-| Tool A | Yes | Yes | Yes |
-| Tool B | Yes | Yes | Partial |
-| Tool C | Limited | Yes | No |
-
----
-
-## 16. High Availability (HA)
-
-| Tool | HA Supported | Strategy |
-|----|--------------|----------|
-| Tool A | Yes | Active-Active |
-| Tool B | Yes | Active-Passive |
-| Tool C | No | N/A |
+| Check Type | Command |
+|-----------|---------|
+| Service Status | systemctl status <service-name> |
+| Logs | tail -f /var/log/software/application.log |
 
 ---
 
-## 17. Disaster Recovery (DR)
+## 14. Disaster Recovery
 
-| Tool | Backup Capability | Restore Support |
-|----|------------------|----------------|
-| Tool A | Automated | Yes |
-| Tool B | Manual | Yes |
-| Tool C | Limited | Partial |
-
----
-
-## 18. Operations & Maintenance
-
-| Tool | Upgrade Method | Downtime Impact |
-|----|----------------|-----------------|
-| Tool A | Rolling Upgrade | None |
-| Tool B | Manual | Partial |
-| Tool C | Full Restart | Yes |
+| DR Component | Description |
+|-------------|-------------|
+| Backup | Regular data backups |
+| Storage | Offsite or cloud storage |
+| Restore | Tested restoration procedure |
+| DR Drill | Periodic recovery testing |
 
 ---
 
-## 19. Troubleshooting & Support
+## 15. High Availability
 
-| Tool | Documentation | Support Model |
-|----|----------------|---------------|
-| Tool A | Strong | Community + Vendor |
-| Tool B | Moderate | Vendor |
-| Tool C | Limited | Community |
-
----
-
-## 20. Pros & Cons Summary
-
-### Tool A
-**Pros**
-- Scalable and secure  
-- Enterprise-ready  
-
-**Cons**
-- Initial setup complexity  
-
-### Tool B
-**Pros**
-- Easy-to-use UI  
-- Commercial support  
-
-**Cons**
-- Licensing cost  
-
-### Tool C
-**Pros**
-- Lightweight  
-
-**Cons**
-- Limited features  
+| HA Component | Description |
+|-------------|-------------|
+| Load Balancer | Traffic distribution |
+| Multiple Nodes | Avoid single point of failure |
+| Health Checks | Automated recovery |
+| Replication | Database replication |
 
 ---
 
-## 21. Recommendation
+## 16. Troubleshooting
 
-Based on the evaluation criteria and operational alignment, **Tool A** is recommended as the preferred solution due to its scalability, security compliance, monitoring capabilities, and long-term maintainability.
+| Issue | Possible Cause | Solution |
+|------|---------------|----------|
+| Service not starting | Port conflict | Verify open ports |
+| Application crash | Missing dependency | Reinstall dependency |
+
+---
+
+## 17. FAQs
+
+| Question | Answer |
+|---------|--------|
+| Is this application free? | Yes, it is open-source |
+| Cloud support available? | Yes, all major cloud providers |
+| Enterprise version available? | No |
 
 ---
 
-## 22. Conclusion
+## 18. Contact Information
 
-This README establishes a governed, repeatable approach to tool comparison and selection.  
-Adhering to this SOP minimizes operational risk and ensures tooling decisions remain aligned with enterprise software and application standards.
+| Name | Team | Contact Type | Details |
+|------|------|--------------|---------|
+| Shreyas Awasthi | Saarthi | Email | shreyas.awasthi.snaatak@mygurukulam.co |
 
 ---
+
+## 19. References
+
+| Description | Link |
+|------------|------|
+| Installation format reference | [Jenkins Installation Guide](https://www.jenkins.io/doc/book/installing/linux/#debianubuntu) |
+| FAQ structure reference | [Amplifi FAQs](https://amplifi.com/user-guide/FAQs.html) |
+| Introduction vs Overview reference | [Intro vs Overview](https://thecontentauthority.com/blog/introduction-vs-overview) |
 
