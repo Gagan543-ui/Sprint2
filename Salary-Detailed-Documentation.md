@@ -202,9 +202,9 @@ springdoc:
 
 ---
 
-# 7. Step-by-Step Installation
+## 7. Step-by-Step Installation
 
-## 7.1 Step 1: Install Java
+### 7.1 Step 1: Install Java
 
 ```bash
 sudo apt update
@@ -214,7 +214,7 @@ java -version
 
 ---
 
-## 7.2 Step 2: Install Maven
+### 7.2 Step 2: Install Maven
 
 ```bash
 sudo apt install maven -y
@@ -223,7 +223,7 @@ mvn -version
 
 ---
 
-## 7.3 Step 3: Clone Repository
+### 7.3 Step 3: Clone Repository
 
 ```bash
 git clone <repository-url>
@@ -232,7 +232,7 @@ cd salary-api
 
 ---
 
-## 7.4 Step 4: Build Artifact
+### 7.4 Step 4: Build Artifact
 
 ```bash
 mvn clean install -DskipTests
@@ -252,7 +252,7 @@ java -jar target/salary-0.1.0-RELEASE.jar --help
 
 ---
 
-## 7.5 Step 5: Run Cassandra Migration
+### 7.5 Step 5: Run Cassandra Migration
 
 ```bash
 migrate -path migration -database "cassandra://10.0.1.25:9042/employee?username=scylla&password=12345" up
@@ -267,7 +267,7 @@ describe tables;
 
 ---
 
-## 7.6 Step 6: Run Application
+### 7.6 Step 6: Run Application
 
 ```bash
 java -jar target/salary-0.1.0-RELEASE.jar --server.port=8082
@@ -281,7 +281,7 @@ curl http://10.0.2.75:8082/actuator/health
 
 ---
 
-# 8. Deploy as Systemd Service
+## 8. Deploy as Systemd Service
 
 Create service file:
 
@@ -325,21 +325,21 @@ ss -tulpn | grep 8082
 
 ---
 
-# 9. API Endpoints
+## 9. API Endpoints
 
-## 9.1 Create Salary Record
+### 9.1 Create Salary Record
 
 ```bash
 curl http://10.0.2.75:8082/api/v1/salary/create/record
 ```
 
-## 9.2 Swagger UI
+### 9.2 Swagger UI
 
 ```
 http://10.0.2.75:8082/salary-documentation
 ```
 
-## 9.3 API Docs
+### 9.3 API Docs
 
 ```
 http://10.0.2.75:8082/salary-api-docs
@@ -347,9 +347,9 @@ http://10.0.2.75:8082/salary-api-docs
 
 ---
 
-# 10. Monitoring
+## 10. Monitoring
 
-## 10.1 Actuator Endpoints
+### 10.1 Actuator Endpoints
 
 - `/actuator/health`
 - `/actuator/metrics`
@@ -357,7 +357,7 @@ http://10.0.2.75:8082/salary-api-docs
 
 ---
 
-# 11. Metrics
+## 11. Metrics
 
 | Parameter | Priority | Threshold |
 |------------|----------|------------|
@@ -371,7 +371,7 @@ http://10.0.2.75:8082/salary-api-docs
 
 ---
 
-# 12. Health Checks
+## 12. Health Checks
 
 | Name | Type | InitialDelaySeconds | PeriodSeconds | TimeoutSeconds | SuccessThreshold | FailureThreshold |
 |------|------|--------------------|--------------|----------------|-----------------|-----------------|
@@ -380,7 +380,7 @@ http://10.0.2.75:8082/salary-api-docs
 
 ---
 
-# 13. Logging
+## 13. Logging
 
 ```yaml
 logging:
@@ -397,15 +397,15 @@ Log Categories:
 
 ---
 
-# 14. Docker Support (Optional)
+## 14. Docker Support (Optional)
 
-## 14.1 Build Image
+### 14.1 Build Image
 
 ```bash
 make docker-build
 ```
 
-## 14.2 Push Image
+### 14.2 Push Image
 
 ```bash
 make docker-push
@@ -413,7 +413,7 @@ make docker-push
 
 ---
 
-# 15. Makefile
+## 15. Makefile
 
 ```makefile
 APP_VERSION ?= v0.1.0
@@ -441,7 +441,7 @@ run-migrations:
 
 ---
 
-# 16. Disaster Recovery
+## 16. Disaster Recovery
 
 - Regular ScyllaDB backups  
 - Redis persistence enabled  
@@ -450,7 +450,7 @@ run-migrations:
 
 ---
 
-# 17. High Availability
+## 17. High Availability
 
 - Deploy multiple instances  
 - Use Load Balancer  
@@ -462,7 +462,7 @@ run-migrations:
 
 ---
 
-# 18. Troubleshooting
+## 18. Troubleshooting
 
 | Issue | Cause | Resolution |
 |--------|--------|------------|
@@ -473,7 +473,7 @@ run-migrations:
 
 ---
 
-# 19. FAQs
+## 19. FAQs
 
 | Question | Answer |
 |----------|--------|
@@ -483,7 +483,7 @@ run-migrations:
 
 ---
 
-# 20. Contact Information
+## 20. Contact Information
 
 | Name            | Team    | Contact Type | Details |
 | --------------- | ------- | ------------ | ------- |
@@ -491,7 +491,7 @@ run-migrations:
 
 ---
 
-# 21. References
+## 21. References
 
 | Descriptions | Links |
 |-------------|------|
