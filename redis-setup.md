@@ -20,24 +20,20 @@
    * 4.1 [Update Package Repository](#41-update-package-repository)
    * 4.2 [Install Redis Server](#42-install-redis-server)
    * 4.3 [Configure Redis](#43-configure-redis)
-   * 4.4 [Restart Redis Service](#44-restart-redis-service)
-   * 4.5 [Verify Service Status](#45-verify-service-status)
+   * 4.4 [Verify Service Status](#44-verify-service-status)
 5. [Functional Validation](#5-functional-validation)
 6. [Service Management Commands](#6-service-management-commands)
 7. [Troubleshooting](#7-troubleshooting)
-8. [Security Recommendations (Production)](#8-security-recommendations-production)
-9. [Final Outcome](#9-final-outcome)
-10. [Conclusion](#10-conclusion)
-11. [Contact Information](#11-contact-information)
-12. [References](#12-references)
+8. [Final Outcome](#8-final-outcome)
+9. [Conclusion](#9-conclusion)
+10. [Contact Information](#10-contact-information)
+11. [References](#11-references)
 
 ---
 
-## 1. Overview
+## 1. Introduction
 
 This document provides a step-by-step procedure to install, configure, and validate **Redis Server (v6.x)** on **Ubuntu 22.04 (Jammy)** running on an EC2 instance.
-
-This guide is intended for DevOps engineers and system administrators requiring a clean and production-ready Redis setup.
 
 ---
 
@@ -73,7 +69,8 @@ Update the system package index:
 sudo apt update
 ```
 
-This ensures the latest package metadata is available before installation.
+<img width="600" height="800" alt="configuration" src="https://github.com/user-attachments/assets/7d5168c2-7ac9-4f61-9a6e-9bc0ebb56c8d" />
+
 
 ---
 
@@ -84,14 +81,16 @@ Install Redis using the APT package manager:
 ```bash
 sudo apt install redis-server -y
 ```
+<img width="600" height="800" alt="redis-installation" src="https://github.com/user-attachments/assets/6f23e686-85d8-41a1-bd76-5f2998405589" />
+
 
 #### Verify Installation
 
 ```bash
 redis-server --version
 ```
+<img width="600" height="300" alt="Screenshot from 2026-02-12 12-17-34" src="https://github.com/user-attachments/assets/014c253d-4170-4826-8956-38e1c931fc76" />
 
-Expected output should display Redis version information.
 
 ---
 
@@ -109,29 +108,16 @@ Modify the following parameters as required:
 bind 0.0.0.0
 port 6379
 ```
+<img width="600" height="800" alt="configuration-file" src="https://github.com/user-attachments/assets/bc33edc2-98f9-4631-af3f-8c02d1413ee6" />
 
-#### Important Notes
-
-* Avoid writing inline comments on the same line as configuration values.
-* Use `0.0.0.0` only when external access is required.
-* Ensure firewall and security group rules are properly configured before exposing Redis externally.
-
-Save and exit the file after making changes.
 
 ---
-
-### 4.4 Restart Redis Service
-
+### 4.4 Verify Service Status
 Apply configuration changes by restarting Redis:
 
 ```bash
 sudo systemctl restart redis
 ```
-
----
-
-### 4.5 Verify Service Status
-
 Check if Redis is running:
 
 ```bash
@@ -144,6 +130,7 @@ Expected status:
 Active: active (running)
 Status: "Ready to accept connections"
 ```
+<img width="600" height="800" alt="restart" src="https://github.com/user-attachments/assets/70e69fe8-026b-486d-8989-e67d2f8ea3d0" />
 
 ---
 
@@ -160,6 +147,7 @@ Expected response:
 ```
 PONG
 ```
+<img width="600" height="800" alt="Screenshot from 2026-02-12 12-34-14" src="https://github.com/user-attachments/assets/0f5ba2cf-ff7e-4046-8a9f-b5d171f87908" />
 
 ---
 
@@ -182,36 +170,9 @@ If Redis fails to start, review logs:
 ```bash
 sudo journalctl -u redis-server -n 50 --no-pager
 ```
-
-### Common Issue
-
-Error:
-
-```
-Could not create server TCP listening socket
-```
-
-**Cause:** Inline comments in configuration file.
-
-**Resolution:**
-
-Ensure comments are placed on separate lines only.
-
 ---
 
-## 8. Security Recommendations (Production)
-
-For production deployments, consider:
-
-* Binding to specific private IP instead of `0.0.0.0`
-* Enabling authentication (`requirepass`)
-* Configuring firewall rules
-* Using Redis over a private VPC network
-* Enabling TLS (if applicable)
-
----
-
-## 9. Final Outcome
+## 8. Final Outcome
 
 Redis server successfully installed and configured.
 
@@ -221,13 +182,13 @@ Redis server successfully installed and configured.
 
 ---
 
-## 10. Conclusion
+## 9. Conclusion
 
 Redis has been successfully deployed and validated on Ubuntu 22.04. The service is operational, configured as per requirements, and ready for integration with application workloads.
 
 ---
 
-## 11. Contact Information
+## 10. Contact Information
 
 | Name            | Team    | Contact Type | Details                                                                                 |
 | --------------- | ------- | ------------ | --------------------------------------------------------------------------------------- |
@@ -235,7 +196,7 @@ Redis has been successfully deployed and validated on Ubuntu 22.04. The service 
 
 ---
 
-## 12. References
+## 11. References
 
 | Descriptions                 | Links                                                                                        |
 | ---------------------------- | -------------------------------------------------------------------------------------------- |
