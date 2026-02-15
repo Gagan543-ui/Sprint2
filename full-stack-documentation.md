@@ -1,4 +1,4 @@
-# OT Microservices Architecture
+# OT Microservices Documentation
 
 ---
 # Table of Contents
