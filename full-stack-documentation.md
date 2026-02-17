@@ -88,7 +88,7 @@ Architecture follows a **multi-tier VPC design**:
 
 | Resource | Name | CIDR |
 |----------|------|------|
-| VPC | ot_micro_vpc | 10.0.0.0/24 |
+| VPC | ot_micro_vpc | 10.0.0.0/16 |
 
 ---
 
@@ -96,22 +96,22 @@ Architecture follows a **multi-tier VPC design**:
 
 | Subnet | AZ | CIDR | Type |
 |--------|----|-------|------|
-| ot_micro_subnet_entry | ap-south-1a | 10.0.0.0/26 | Public |
-| ot_micro_subnet_api | ap-south-1b | 10.0.0.64/26 | Private |
-| ot_micro_subnet_db | ap-south-1c | 10.0.0.128/26 | Private |
-| ot_micro_subnet_frontend | ap-south-1b | 10.0.0.192/26 | Public |
+| ot-private-sub-1 | us-east-1a | 10.0.1.0/24 | Private |
+| ot-private-sub-2 | us-east-1b | 10.0.2.0/24 | Private |
+| ot-private-sub-3 | us-east-1c | 10.0.3.0/24 | Private |
+| ot-public-sub-1 | us-east-1d | 10.0.5.0/28 | Public |
 
 ---
 
 ## 4 Gateway Configuration
 
 ### 4.1 Internet Gateway
-- Name: `ot_micro_igw`
-- Attached to: `ot_micro_vpc`
+- Name: `ot-micro-gw`
+- Attached to: `ot-public-rt`
 
 ### 4.2 NAT Gateway
-- Name: `ot_micro_nat`
-- Attached to: `ot_micro_subnet_entry`
+- Name: `OT-nat`
+- Attached to: `ot-private-rt`
 - Purpose: Enables outbound internet for private subnets
 
 ---
@@ -251,7 +251,7 @@ It follows a microservices architecture using **Redis (cache)** and **ScyllaDB (
 | Migrations       | Deployment / Schema Layer | Manages schema creation and structural updates in ScyllaDB during deployment. |
 
 #### Architecture Diagram 
-<img width="1536" height="1024" alt="employee" src="https://github.com/user-attachments/assets/12912c76-fba9-427e-9103-efcf333f03ff" />
+<img width="700" height="700" alt="employee" src="https://github.com/user-attachments/assets/12912c76-fba9-427e-9103-efcf333f03ff" />
 
 ---
 ### Core Components
@@ -525,7 +525,7 @@ It is designed with a cloud-ready architecture using PostgreSQL for persistence 
 
 
 #### Architecture Diagram 
-<img width="2259" height="976" alt="Screenshot from 2026-02-17 19-02-18" src="https://github.com/user-attachments/assets/b4eb8535-ff53-4047-8205-2724fa80061f" />
+<img width="700" height="700" alt="Screenshot from 2026-02-17 19-02-18" src="https://github.com/user-attachments/assets/b4eb8535-ff53-4047-8205-2724fa80061f" />
 
 ---
 
