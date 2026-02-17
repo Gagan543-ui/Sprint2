@@ -599,7 +599,7 @@ Client → API (8080) → Redis (cache check)
 | Attendance API | `/api/v1/attendance/health`          | 8081  | Service availability   |
 | Salary API     | `/actuator/health`                   | 8082  | Spring Boot health     |
 | Frontend       | `http://<Frontend_Public_IP>`        | 80    | UI accessibility check |
-
+ 
 ### Sample Commands
 
 ```bash
@@ -620,10 +620,6 @@ curl http://localhost:8082/actuator/health
 | API Access Management        | NGINX reverse proxy                           | Eliminates CORS and centralizes routing |
 | Database Security            | Authentication enabled                        | Enforce credential-based access       |
 | Database Exposure            | No public DB ports                            | Prevent external database access      |
-
-## 14. Architecture Flow
-
-<img width="600" height="600" alt="Screenshot from 2026-02-15 14-21-50" src="https://github.com/user-attachments/assets/b85af3b1-4be2-4b55-8da9-08190b501c0a" />
 
 ---
 
