@@ -232,94 +232,364 @@ authorizer: CassandraAuthorizer
 
 ## 9. Backend Services
 
-| Service Name        | Technology Stack      | Port  | Database Used         | Build Command                              | Deployment Method        |
-|---------------------|----------------------|-------|-----------------------|--------------------------------------------|--------------------------|
-| **Employee API**    | Go                   | 8080  | ScyllaDB              | N/A                                        | systemd service          |
-| **Attendance API**  | Python + Flask       | 8081  | PostgreSQL + Redis    | N/A                                        | Gunicorn + systemd       |
-| **Salary API**      | Spring Boot (Java)   | 8082  | ScyllaDB              | `./mvnw clean package -DskipTests`         | systemd (JAR execution)  |
+### Employee API
+
+###  Overview
+
+The **Employee API** is a Golang-based microservice designed to manage employee data through scalable REST endpoints.  
+It follows a microservices architecture using **Redis (cache)** and **ScyllaDB (primary database)**.
 
 ---
 
-Run:
+### Architecture Workflow
+
+| Component        | Layer                   | Description |
+|------------------|-------------------------|-------------|
+| Employee API     | Application Layer       | Handles client requests and coordinates between cache and database. Acts as the control layer. |
+| Redis            | Cache Layer             | In-memory store used for fast data retrieval. Reduces load on the primary database. |
+| ScyllaDB         | Primary Database Layer  | Distributed NoSQL database. Serves as the source of truth for persistent employee data. |
+| Migrations       | Deployment / Schema Layer | Manages schema creation and structural updates in ScyllaDB during deployment. |
+
+#### Architecture Diagram 
+<img width="1536" height="1024" alt="employee" src="https://github.com/user-attachments/assets/12912c76-fba9-427e-9103-efcf333f03ff" />
+
+---
+### Core Components
+
+| Component      | Description |
+|---------------|------------|
+| Gin           | Lightweight HTTP framework used to build REST APIs and handle routing. |
+| ScyllaDB      | Distributed NoSQL database used as the primary persistent data store. |
+| Redis         | In-memory cache used to reduce database load and improve response time. |
+| Prometheus    | Monitoring tool used for collecting application metrics. |
+| Swagger UI    | Interactive API documentation and testing interface. |
+
+### Pattern Used
+
+| Pattern        | Description |
+|---------------|------------|
+| Cache-Aside   | API first checks Redis; on cache miss, fetches data from ScyllaDB and stores it in Redis for future use. |
+
+---
+
+##  System Requirements
+
+### API Server
+
+| Requirement | Description |
+|------------|------------|
+| OS         | Ubuntu 22.04 LTS |
+| RAM        | Minimum 4 GB |
+| Disk       | Minimum 20 GB |
+| CPU        | Dual-core processor |
+
+### Database Server
+
+| Requirement | Description |
+|------------|------------|
+| OS         | Ubuntu 22.04 LTS |
+| RAM        | Minimum 8 GB |
+| Disk       | Minimum 50 GB |
+| CPU        | Dual-core processor |
+
+---
+
+##  Dependencies
+
+### Build-Time Dependencies
+
+| Dependency | Description |
+|-----------|------------|
+| Go        | Programming language used to develop the API. |
+| Make      | Automation tool used for build and execution commands. |
+
+### Run-Time Dependencies
+
+| Dependency | Description |
+|-----------|------------|
+| ScyllaDB  | Primary database storing employee records. |
+| Redis     | Optional caching layer for performance optimization. |
+| Prometheus| Metrics collection and monitoring system. |
+| Swagger   | API documentation and testing tool. |
+
+---
+
+##  Important Endpoints & Ports
+
+| Port / Endpoint | Description |
+|----------------|------------|
+| 8080           | Application HTTP server port. |
+| 9042           | ScyllaDB database port. |
+| /swagger/index.html | Swagger UI documentation endpoint. |
+| /health        | Health check endpoint for service monitoring. |
+
+---
+
+##  Monitoring
+
+### Key Metrics
+
+| Metric | Description |
+|--------|------------|
+| CPU Utilization | Measures processor usage of the API service. |
+| Memory Utilization | Tracks memory consumption levels. |
+| Disk Usage | Monitors disk space utilization. |
+| Latency | Measures API response time (< 300ms recommended). |
+| Availability | Ensures uptime target of ≥ 99.9%. |
+
+### Log Files
+
+| Log File Path | Description |
+|--------------|------------|
+| /var/log/employee-api/server.log | Application server logs. |
+| /var/log/employee-api/access.log | Client access logs. |
+| /var/log/employee-api/threat.log | Security and threat-related logs. |
+
+---
+
+##  High Availability & Disaster Recovery
+
+| Strategy | Description |
+|----------|------------|
+| Load Balancer | Distributes traffic across multiple API instances. |
+| ScyllaDB Replication | Ensures data redundancy and fault tolerance. |
+| Redis Persistence | Maintains cached data durability where required. |
+| Regular Backups | Protects against data loss during failures. |
+
+---
+## Salary API
+
+The **Salary API** is a Spring Boot–based microservice responsible for managing employee salary records.  
+It is designed for scalability, observability, and high availability within a microservices ecosystem.
+
+##  System Requirements
+
+| Requirement | Minimum |
+|-------------|---------|
+| OS | Ubuntu 22.04 |
+| CPU | Dual-core |
+| RAM | 4 GB |
+| Disk | 20 GB |
+
+---
+
+###  Dependencies
+
+#### Build-Time
+
+| Dependency | Version | Purpose |
+|------------|----------|----------|
+| Java | 17+ | Runtime for Spring Boot |
+| Maven | 3.8+ | Build & dependency management |
+
+#### Run-Time
+
+| Dependency | Version | Purpose |
+|------------|----------|----------|
+| ScyllaDB / Cassandra | 4.x | Primary database |
+| Redis | 6.x+ | Caching layer |
+
+---
+
+###  Makefile
+
+**Purpose:** Automates build, test, and Docker operations.  
+Ensures consistency across developers and CI/CD pipelines using simple commands like:
+
 ```bash
-java -jar target/salary-0.1.0-RELEASE.jar --server.port=8082
-
+make build
+make test
+make run
 ```
 
-## 10. Frontend Deployment
-
-### Technology Stack
-- React
-- NodeJS
-- NGINX
 
 ---
 
-### 10.1 Build Process
+###  Architecture Workflow 
 
-```bash
-npm install
-npm run build
-```
 
----
+| Step | Title                        | Description |
+|------|-----------------------------|------------|
+| 1    | API checks Redis            | When a request comes to the Salary API, it first checks Redis to see if the required salary data is already available in cache. |
+| 2    | Cache Hit                   | If the data is found in Redis, it is returned immediately. ScyllaDB is not used, so the response is fast. |
+| 3    | Cache Miss                  | If the data is not found in Redis, the Salary API queries ScyllaDB to get the required salary data. |
+| 4    | Database Response           | ScyllaDB returns the requested data to the Salary API. ScyllaDB acts as the main source of truth. |
+| 5    | Store in Cache              | After receiving the data from ScyllaDB, the Salary API stores a copy in Redis so that future requests can be served faster. |
+| 6    | Migrations                  | Migrations are used to create and update tables or schema in ScyllaDB. They run during deployment and are not part of the runtime request flow. |
 
-### 10.2 Deployment Steps
+#### Architecture Diagram 
+<img width="700" height="700" alt="salary" src="https://github.com/user-attachments/assets/280b5057-162d-4c84-b34c-40574f3beecf" />
 
-```bash
-sudo rm -rf /var/www/html/*
-sudo cp -r build/* /var/www/html/
-```
-
----
-
-## 11. NGINX Reverse Proxy Configuration
-
-### Configuration File Location
-
-```
-/etc/nginx/sites-available/default
-```
-
-### Server Configuration
-
-```nginx
-server {
-    listen 80 default_server;
-    server_name _;
-
-    root /var/www/html;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    location /api/v1/employee/ {
-        proxy_pass http://10.0.0.97:8080/api/v1/employee/;
-    }
-
-    location /api/v1/attendance/ {
-        proxy_pass http://10.0.0.97:8081/api/v1/attendance/;
-    }
-
-    location /api/v1/salary/ {
-        proxy_pass http://10.0.0.97:8082/api/v1/salary/;
-    }
-}
-```
 
 ---
 
-### Restart NGINX
+##  Important Ports
 
-```bash
-sudo nginx -t
-sudo systemctl restart nginx
-```
+| Port | Service |
+|------|---------|
+| 8082 | Salary API |
+| 9042 | ScyllaDB |
+| 6379 | Redis |
 
 ---
 
+##  Monitoring & Health
+
+### Actuator Endpoints
+
+- `/actuator/health`
+- `/actuator/metrics`
+- `/actuator/prometheus`
+
+### Key Metrics
+
+| Metric | Threshold |
+|--------|------------|
+| Disk Usage | > 90% |
+| CPU Usage | > 70% |
+| Memory Usage | > 80% |
+| Latency | < 300 ms |
+| Availability | ≥ 99.9% |
+
+---
+
+##  Logging
+
+Configured via `application.yml`.
+
+**Log Types:**
+- Event Logs – Application lifecycle events  
+- Access Logs – Incoming API requests  
+- Server Logs – Internal processing  
+- Threat Logs – Security-related events  
+
+Example:
+
+```yaml
+logging:
+  level:
+    org.springframework.web: DEBUG
+
+```
+
+---
+## Attendance API
+
+---
+
+The **Attendance API** is a Python (Flask)-based microservice for managing employee attendance records.  
+It is designed with a cloud-ready architecture using PostgreSQL for persistence and Redis for caching.
+
+---
+
+
+###  Purpose
+
+#### Business
+- Manage employee attendance records.
+- Provide APIs to create, search, and retrieve attendance data.
+- Enable health and metrics monitoring.
+
+#### Technical
+- PostgreSQL for persistent storage.
+- Redis for caching.
+- Liquibase for database migrations.
+- Gunicorn + Systemd for deployment.
+
+---
+
+###  System & Software Requirements
+
+| Component | Minimum |
+|------------|----------|
+| OS | Ubuntu 22.04 LTS |
+| CPU | Quad-core |
+| RAM | 4 GB (8 GB recommended) |
+| Disk | 20 GB |
+| Python | 3.11 |
+| PostgreSQL | 16 |
+| Redis | 7.x |
+| Liquibase | 4.24.0 |
+
+---
+
+###  Architecture Workflow 
+
+| Step | Title                     | Description |
+|------|---------------------------|------------|
+| 1    | API checks Redis          | When a request comes, the Attendance API first checks Redis to see if the data is already there. |
+| 2    | Cache Hit                 | If the data is found in Redis, Redis sends it back immediately. The database is not used, so the response is fast. |
+| 3    | Cache Miss                | If the data is not found in Redis, the API asks PostgreSQL for the data. |
+| 4    | Database Response         | PostgreSQL returns the data to the API. |
+| 5    | Store in Cache            | The API stores a copy of the data in Redis so that next time it can be returned quickly. |
+
+
+#### Architecture Diagram 
+<img width="2259" height="976" alt="Screenshot from 2026-02-17 19-02-18" src="https://github.com/user-attachments/assets/b4eb8535-ff53-4047-8205-2724fa80061f" />
+
+---
+
+### Components
+- Bastion Host (Public Subnet)
+- DB Server (PostgreSQL + Redis)
+- API Server (Attendance API)
+
+### Flow
+Client → API (8080) → Redis (cache check)  
+                     → PostgreSQL (on cache miss)
+
+### Monitoring Endpoints
+- `/api/v1/attendance/health`
+- `/api/v1/attendance/health/detail`
+- `/metrics`
+- `/apidocs` (Swagger)
+
+---
+##  Dependencies
+
+### Runtime
+
+| Dependency | Purpose |
+|------------|----------|
+| PostgreSQL | Primary relational database |
+| Redis | Caching layer |
+| Gunicorn | WSGI server |
+| Liquibase | Database migrations |
+
+### Other
+
+| Tool | Purpose |
+|------|----------|
+| make | Build automation |
+| pylint | Code linting |
+| default-jre | Required for Liquibase |
+
+---
+
+##  Important Ports
+
+| Port | Service |
+|------|----------|
+| 22 | SSH |
+| 5432 | PostgreSQL |
+| 6379 | Redis |
+| 8080 | Attendance API |
+
+---
+
+##  Deployment Summary
+
+### Infrastructure
+- VPC with Public (Bastion) & Private (DB/API) subnets
+- Secure Security Group rules between API and DB
+
+### Database Setup
+- Install PostgreSQL 16
+- Enable remote access
+- Create `attendance_db`
+- Install & configure Redis
+
+---
 
 ## 12. Health Checks
 
