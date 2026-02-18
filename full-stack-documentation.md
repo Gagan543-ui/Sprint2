@@ -243,12 +243,12 @@ It follows a microservices architecture using **Redis (cache)** and **ScyllaDB (
 
 ### Architecture Workflow
 
-| Component        | Layer                   | Description |
+| Component        | Description |
 |------------------|-------------------------|-------------|
-| Employee API     | Application Layer       | Handles client requests and coordinates between cache and database. Acts as the control layer. |
-| Redis            | Cache Layer             | In-memory store used for fast data retrieval. Reduces load on the primary database. |
-| ScyllaDB         | Primary Database Layer  | Distributed NoSQL database. Serves as the source of truth for persistent employee data. |
-| Migrations       | Deployment / Schema Layer | Manages schema creation and structural updates in ScyllaDB during deployment. |
+| Employee API     |  Handles client requests and coordinates between cache and database. Acts as the control layer. |
+| Redis            | In-memory store used for fast data retrieval. Reduces load on the primary database. |
+| ScyllaDB         | Distributed NoSQL database. Serves as the source of truth for persistent employee data. |
+| Migrations       | Manages schema creation and structural updates in ScyllaDB during deployment. |
 
 #### Architecture Diagram 
 <img width="700" height="700" alt="employee" src="https://github.com/user-attachments/assets/12912c76-fba9-427e-9103-efcf333f03ff" />
@@ -405,17 +405,19 @@ make run
 
 ---
 
-###  Architecture Workflow 
+### Architecture Workflow
+
+| Component          | Description |
+|-------------------|-------------|
+| API checks Redis  | When a request comes to the Salary API, it first checks Redis to see if the required salary data is already available in cache. |
+| Cache Hit         | If the data is found in Redis, it is returned immediately. ScyllaDB is not used, so the response is fast. |
+| Cache Miss        | If the data is not found in Redis, the Salary API queries ScyllaDB to get the required salary data. |
+| Database Response | ScyllaDB returns the requested data to the Salary API. ScyllaDB acts as the main source of truth. |
+| Store in Cache    | After receiving the data from ScyllaDB, the Salary API stores a copy in Redis so that future requests can be served faster. |
+| Migrations        | Migrations are used to create and update tables or schema in ScyllaDB. They run during deployment and are not part of the runtime request flow. |
 
 
-| Step | Title                        | Description |
-|------|-----------------------------|------------|
-| 1    | API checks Redis            | When a request comes to the Salary API, it first checks Redis to see if the required salary data is already available in cache. |
-| 2    | Cache Hit                   | If the data is found in Redis, it is returned immediately. ScyllaDB is not used, so the response is fast. |
-| 3    | Cache Miss                  | If the data is not found in Redis, the Salary API queries ScyllaDB to get the required salary data. |
-| 4    | Database Response           | ScyllaDB returns the requested data to the Salary API. ScyllaDB acts as the main source of truth. |
-| 5    | Store in Cache              | After receiving the data from ScyllaDB, the Salary API stores a copy in Redis so that future requests can be served faster. |
-| 6    | Migrations                  | Migrations are used to create and update tables or schema in ScyllaDB. They run during deployment and are not part of the runtime request flow. |
+
 
 #### Architecture Diagram 
 <img width="700" height="700" alt="salary" src="https://github.com/user-attachments/assets/280b5057-162d-4c84-b34c-40574f3beecf" />
@@ -514,14 +516,14 @@ It is designed with a cloud-ready architecture using PostgreSQL for persistence 
 ---
 
 ###  Architecture Workflow 
+| Component             | Description |
+|----------------------|-------------|
+| API checks Redis     | When a request comes, the Attendance API first checks Redis to see if the data is already there. |
+| Cache Hit            | If the data is found in Redis, Redis sends it back immediately. The database is not used, so the response is fast. |
+| Cache Miss           | If the data is not found in Redis, the API asks PostgreSQL for the data. |
+| Database Response    | PostgreSQL returns the data to the API. |
+| Store in Cache       | The API stores a copy of the data in Redis so that next time it can be returned quickly. |
 
-| Step | Title                     | Description |
-|------|---------------------------|------------|
-| 1    | API checks Redis          | When a request comes, the Attendance API first checks Redis to see if the data is already there. |
-| 2    | Cache Hit                 | If the data is found in Redis, Redis sends it back immediately. The database is not used, so the response is fast. |
-| 3    | Cache Miss                | If the data is not found in Redis, the API asks PostgreSQL for the data. |
-| 4    | Database Response         | PostgreSQL returns the data to the API. |
-| 5    | Store in Cache            | The API stores a copy of the data in Redis so that next time it can be returned quickly. |
 
 
 #### Architecture Diagram 
