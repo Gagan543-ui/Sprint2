@@ -1,6 +1,7 @@
 # OT Microservices Documentation
 
 ---
+
 # Table of Contents
 
 1. [Overview](#1-overview)  
@@ -10,63 +11,68 @@
 <details>
 <summary><strong>4. Gateway Configuration</strong></summary>
 
-- [4.1 Internet Gateway](#41-internet-gateway)  
-- [4.2 NAT Gateway](#42-nat-gateway)
+- 4.1 [Internet Gateway](#41-internet-gateway)  
+- 4.2 [NAT Gateway](#42-nat-gateway)
 
 </details>
 
 <details>
 <summary><strong>5. Route Tables</strong></summary>
 
-- [5.1 Public Route Table](#51-public-route-table)  
-- [5.2 Private Route Table](#52-private-route-table)
+- 5.1 [Public Route Table](#51-public-route-table)  
+- 5.2 [Private Route Table](#52-private-route-table)
+
+</details>
+
+6. [Backend Services](#9-backend-services)
+
+<details>
+<summary><strong>6.1 Employee API</strong></summary>
+
+- 6.1.1 [Overview](#overview)  
+- 6.1.2 [Architecture](#architecture)  
+- 6.1.3 [Core Components](#core-components)  
+- 6.1.4 [Pattern Used](#pattern-used)  
+- 6.1.5 [System Requirements](#system-requirements)  
+- 6.1.6 [Dependencies](#dependencies)  
+- 6.1.7 [Important Endpoints & Ports](#important-endpoints--ports)  
+- 6.1.8 [Monitoring](#monitoring)  
+- 6.1.9 [High Availability & Disaster Recovery](#high-availability--disaster-recovery)
 
 </details>
 
 <details>
-<summary><strong>6. EC2 Instances</strong></summary>
+<summary><strong>6.2 Salary API</strong></summary>
 
-- [6.1 Bastion Host](#61-bastion-host)  
-- [6.2 Backend Server](#62-backend-server)  
-- [6.3 Database Server](#63-database-server)
-
-</details>
-
-<details>
-<summary><strong>7. SSH Access</strong></summary>
-
-- [7.1 Local → Bastion](#71-local--bastion)
+- 6.2.1 [System Requirements](#system-requirements-1)  
+- 6.2.2 [Dependencies](#dependencies-1)  
+- 6.2.3 [Makefile](#makefile)  
+- 6.2.4 [Architecture](#architecture-1)  
+- 6.2.5 [Important Ports](#important-ports)  
+- 6.2.6 [Monitoring & Health](#monitoring--health)  
+- 6.2.7 [Logging](#logging)
 
 </details>
 
 <details>
-<summary><strong>8. Database Setup</strong></summary>
+<summary><strong>6.3 Attendance API</strong></summary>
 
-- [8.1 PostgreSQL](#81-postgresql)  
-- [8.2 Redis](#82-redis)  
-- [8.3 ScyllaDB](#scylladb)
-
-</details>
-
-9. [Backend Services](#9-backend-services)  
-
-<details>
-<summary><strong>10. Frontend Deployment</strong></summary>
-
-- [10.1 Build Process](#101-build-process)  
-- [10.2 Deployment Steps](#102-deployment-steps)
+- 6.3.1 [Purpose](#purpose)  
+- 6.3.2 [System & Software Requirements](#system--software-requirements)  
+- 6.3.3 [Architecture](#architecture-2)  
+- 6.3.4 [Dependencies](#dependencies-2)  
+- 6.3.5 [Important Ports](#important-ports-1)  
+- 6.3.6 [Deployment Summary](#deployment-summary)
 
 </details>
 
-11. [NGINX Reverse Proxy Configuration](#11-nginx-reverse-proxy-configuration)  
-12. [Health Checks](#12-health-checks)  
-13. [Security Measures](#13-security-measures)  
-14. [Architecture Flow](#14-architecture-flow)  
-15. [Conclusion](#15-conclusion)  
-16. [Contact Information](#16-contact-information)  
-17. [References](#17-references)  
- 
-  
+7. [Health Checks](#12-health-checks)  
+8. [Security Measures](#13-security-measures)  
+9. [Architecture Flow](#14-architecture-flow)  
+10. [Conclusion](#15-conclusion)  
+11. [Contact Information](#16-contact-information)  
+12. [References](#17-references)  
+
 ---
 
 ##  1 .Overview
@@ -136,125 +142,32 @@ Route: 0.0.0.0/0 → NAT Gateway
 
 ---
 
-## 6. EC2 Instances
 
-### 6.1 Bastion Host
 
-| Parameter | Value |
-|------------|--------|
-| AMI | Ubuntu 22.04 |
-| Type | t3.micro |
-| Subnet | Public |
-| Purpose | SSH Access |
+## 6. Backend Services
 
----
+### 6.1 Employee API
 
-### 6.2 Backend Server
-
-| Parameter | Value |
-|------------|--------|
-| AMI | Ubuntu 22.04 |
-| Type | c7i-flex.large |
-| Subnet | Private |
-
-Runs:
-- Employee API (8080)
-- Attendance API (8081)
-- Salary API (8082)
-
----
-
-### 6.3 Database Server
-
-| Parameter | Value |
-|------------|--------|
-| AMI | Ubuntu 22.04 |
-| Type | m7i-flex.large |
-| Subnet | Private |
-
-Runs:
-- PostgreSQL (5432)
-- ScyllaDB (9042)
-- Redis (6379)
-
----
-
-## 7. SSH Access
-
-### 7.1 Local → Bastion
-
-```bash
-chmod 400 ot_micro_service.pem
-ssh -i ot_micro_service.pem ubuntu@<Bastion_Public_IP>
-```
-#### Bastion → Private Instances
-```bash
-ssh -i ot_micro_service.pem ubuntu@<Private_IP>
-```
----
-
-## 8. Database Setup
-
-### 8.1 PostgreSQL
-
-#### Configuration:
-```bash
-listen_addresses = '*'
-port = 5432
-```
-```bash
-Create DB:
-
-CREATE DATABASE attendance_db;
-ALTER USER postgres WITH PASSWORD 'password';
-```
-
-### 8.2 Redis
-```bash
-bind 0.0.0.0
-```
-
-Restart:
-```bash
-sudo systemctl restart redis-server
-```
-### ScyllaDB
-
-Enable authentication in:
-``` bash
-/etc/scylla/scylla.yaml
-```
-
-```bash
-authenticator: PasswordAuthenticator
-authorizer: CassandraAuthorizer
-```
-
-## 9. Backend Services
-
-### Employee API
-
-###  Overview
+###  6.1.1 Overview
 
 The **Employee API** is a Golang-based microservice designed to manage employee data through scalable REST endpoints.  
 It follows a microservices architecture using **Redis (cache)** and **ScyllaDB (primary database)**.
 
 ---
 
-### Architecture Workflow
+### 6.1.2 Architecture Workflow
 
 | Component        | Description |
-|------------------|-------------------------|-------------|
+|------------------|-------------------------|
 | Employee API     |  Handles client requests and coordinates between cache and database. Acts as the control layer. |
 | Redis            | In-memory store used for fast data retrieval. Reduces load on the primary database. |
 | ScyllaDB         | Distributed NoSQL database. Serves as the source of truth for persistent employee data. |
 | Migrations       | Manages schema creation and structural updates in ScyllaDB during deployment. |
 
-#### Architecture Diagram 
+### 6.1.3 Architecture Diagram 
 <img width="700" height="700" alt="employee" src="https://github.com/user-attachments/assets/12912c76-fba9-427e-9103-efcf333f03ff" />
 
----
-### Core Components
+### 6.1.4 Core Components
 
 | Component      | Description |
 |---------------|------------|
@@ -264,7 +177,7 @@ It follows a microservices architecture using **Redis (cache)** and **ScyllaDB (
 | Prometheus    | Monitoring tool used for collecting application metrics. |
 | Swagger UI    | Interactive API documentation and testing interface. |
 
-### Pattern Used
+### 6.1.5 Pattern Used
 
 | Pattern        | Description |
 |---------------|------------|
@@ -272,9 +185,9 @@ It follows a microservices architecture using **Redis (cache)** and **ScyllaDB (
 
 ---
 
-##  System Requirements
+##  6.1.6 System Requirements
 
-### API Server
+### 6.1.7 API Server
 
 | Requirement | Description |
 |------------|------------|
@@ -415,8 +328,6 @@ make run
 | Database Response | ScyllaDB returns the requested data to the Salary API. ScyllaDB acts as the main source of truth. |
 | Store in Cache    | After receiving the data from ScyllaDB, the Salary API stores a copy in Redis so that future requests can be served faster. |
 | Migrations        | Migrations are used to create and update tables or schema in ScyllaDB. They run during deployment and are not part of the runtime request flow. |
-
-
 
 
 #### Architecture Diagram 
@@ -593,6 +504,58 @@ Client → API (8080) → Redis (cache check)
 
 ---
 
+## Working of All APIs
+### Architecture Workflow 
+
+This architecture contains three APIs:
+
+- Employee API  
+- Salary API  
+- Attendance API  
+
+All APIs follow a **cache-first approach** using Redis to improve performance.
+
+---
+
+### Employee API (`/api/v1/employee`)
+
+- The request goes to the Employee API.  
+- The API checks Redis (cache) for the data.  
+- If data is found in Redis (cache hit), it is returned immediately.  
+- If data is not found (cache miss), the API fetches it from **ScyllaDB**.  
+- The data is then stored in Redis for future requests.  
+- The response is sent back to the user.  
+
+
+
+### Salary API (`/api/v1/salary`)
+
+- The request goes to the Salary API.  
+- It first checks Redis.  
+- If data exists in Redis, it returns the response directly.  
+- If not, it fetches the data from **ScyllaDB**.  
+- The result is cached in Redis.  
+- The response is sent to the user.  
+
+
+
+### Attendance API (`/api/v1/attendance`)
+
+- The request goes to the Attendance API.  
+- It checks Redis for cached data.  
+- If found, the response is returned immediately.  
+- If not found, the API fetches data from **PostgreSQL**.  
+- The data is stored in Redis.  
+- The response is sent back to the user.  
+
+
+## Architecture Diagram 
+<img width="700" height="700" alt="frontend" src="https://github.com/user-attachments/assets/a142407c-28a6-44b8-a45e-74f9feaf4e33" />
+
+---
+
+
+
 ## 12. Health Checks
 
 | Service         | Health Endpoint                     | Port  | Purpose                |
@@ -612,18 +575,7 @@ curl http://localhost:8082/actuator/health
 
 ---
 
-## 13. Security Measures
 
-| Control Area                 | Implementation Detail                          | Objective                              |
-|------------------------------|-----------------------------------------------|----------------------------------------|
-| Network Isolation            | Private subnet architecture                   | Restrict direct public access         |
-| Outbound Traffic Control     | NAT Gateway                                   | Secure internet access from private subnet |
-| SSH Access Control           | Bastion host only                             | Centralized administrative access     |
-| API Access Management        | NGINX reverse proxy                           | Eliminates CORS and centralizes routing |
-| Database Security            | Authentication enabled                        | Enforce credential-based access       |
-| Database Exposure            | No public DB ports                            | Prevent external database access      |
-
----
 
 ## 15. Conclusion 
 This project demonstrates a structured, production-oriented microservices deployment on AWS using network segmentation, secure access controls, reverse proxy routing, and service-level isolation.
