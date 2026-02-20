@@ -1,12 +1,20 @@
 # OT Microservices Documentation
 
+--
+
+| Author          | Created    | Version | Last updated by | Last Edited On | L0 Reviewer  | L1 Reviewer | L2 Reviewer |
+| --------------- | ---------- | ------- | --------------- | -------------- | ------------ | ----------- | ----------- |
+| Shreyas Awasthi | 2026-02-04  | 1.0     | Shreyas Awasthi | 2026-02-12     | Divya Mishra |  Pritam           |             |
+
 ---
 
-# Table of Contents
+#  Table of Contents
 
 1. [Overview](#1-overview)  
 2. [VPC Configuration](#2-vpc-configuration)  
 3. [Subnet Design](#3-subnet-design)  
+
+---
 
 <details>
 <summary><strong>4. Gateway Configuration</strong></summary>
@@ -16,6 +24,8 @@
 
 </details>
 
+---
+
 <details>
 <summary><strong>5. Route Tables</strong></summary>
 
@@ -24,54 +34,67 @@
 
 </details>
 
-6. [Backend Services](#9-backend-services)
+---
+
+<details>
+<summary><strong>6. Backend Services</strong></summary>
 
 <details>
 <summary><strong>6.1 Employee API</strong></summary>
 
-- 6.1.1 [Overview](#overview)  
-- 6.1.2 [Architecture](#architecture)  
-- 6.1.3 [Core Components](#core-components)  
-- 6.1.4 [Pattern Used](#pattern-used)  
-- 6.1.5 [System Requirements](#system-requirements)  
-- 6.1.6 [Dependencies](#dependencies)  
-- 6.1.7 [Important Endpoints & Ports](#important-endpoints--ports)  
-- 6.1.8 [Monitoring](#monitoring)  
-- 6.1.9 [High Availability & Disaster Recovery](#high-availability--disaster-recovery)
+- 6.1.1 [Overview](#611-overview)  
+- 6.1.2 [Architecture Workflow](#612-architecture-workflow)  
+- 6.1.3 [Architecture Diagram](#613-architecture-diagram)  
+- 6.1.4 [Core Components](#614-core-components)  
+- 6.1.5 [Pattern Used](#615-pattern-used)  
+- 6.1.6 [Important Endpoints & Ports](#62-important-endpoints--ports)  
+- 6.1.7 [Monitoring](#63-monitoring)  
+- 6.1.8 [High Availability & Disaster Recovery](#64-high-availability--disaster-recovery)
 
 </details>
+
+---
 
 <details>
 <summary><strong>6.2 Salary API</strong></summary>
 
-- 6.2.1 [System Requirements](#system-requirements-1)  
-- 6.2.2 [Dependencies](#dependencies-1)  
-- 6.2.3 [Makefile](#makefile)  
-- 6.2.4 [Architecture](#architecture-1)  
-- 6.2.5 [Important Ports](#important-ports)  
-- 6.2.6 [Monitoring & Health](#monitoring--health)  
-- 6.2.7 [Logging](#logging)
+- 6.2.1 [System Requirements](#71-system-requirements)  
+- 6.2.2 [Dependencies](#72-dependencies)  
+- 6.2.3 [Makefile](#73-makefile)  
+- 6.2.4 [Architecture Workflow](#74-architecture-workflow)  
+- 6.2.5 [Important Ports](#75-important-ports)  
+- 6.2.6 [Monitoring & Health](#76-monitoring--health)  
+- 6.2.7 [Logging](#77-logging)
 
 </details>
+
+---
 
 <details>
 <summary><strong>6.3 Attendance API</strong></summary>
 
-- 6.3.1 [Purpose](#purpose)  
-- 6.3.2 [System & Software Requirements](#system--software-requirements)  
-- 6.3.3 [Architecture](#architecture-2)  
-- 6.3.4 [Dependencies](#dependencies-2)  
-- 6.3.5 [Important Ports](#important-ports-1)  
-- 6.3.6 [Deployment Summary](#deployment-summary)
+- 6.3.1 [Purpose](#81-purpose)  
+- 6.3.2 [System & Software Requirements](#82-system--software-requirements)  
+- 6.3.3 [Architecture Workflow](#83-architecture-workflow)  
+- 6.3.4 [Architecture Diagram](#84-architecture-diagram)  
+- 6.3.5 [Components](#85-components)  
+- 6.3.6 [Flow](#86-flow)  
+- 6.3.7 [Monitoring Endpoints](#87-monitoring-endpoints)  
+- 6.3.8 [Dependencies](#88-dependencies)  
+- 6.3.9 [Important Ports](#89-important-ports)
 
 </details>
 
-7. [Health Checks](#12-health-checks)  
-8. [Security Measures](#13-security-measures)  
-9. [Architecture Flow](#14-architecture-flow)  
-10. [Conclusion](#15-conclusion)  
-11. [Contact Information](#16-contact-information)  
-12. [References](#17-references)  
+</details>
+
+---
+
+7. [Working of All APIs](#9-working-of-all-apis)  
+8. [Architecture Diagram](#10architecture-diagram)  
+9. [Health Checks](#11-health-checks)  
+10. [Conclusion](#12-conclusion)  
+11. [Contact Information](#13-contact-information)  
+12. [References](#14-references)  
 
 ---
 
@@ -185,49 +208,7 @@ It follows a microservices architecture using **Redis (cache)** and **ScyllaDB (
 
 ---
 
-##  6.1.6 System Requirements
-
-### 6.1.7 API Server
-
-| Requirement | Description |
-|------------|------------|
-| OS         | Ubuntu 22.04 LTS |
-| RAM        | Minimum 4 GB |
-| Disk       | Minimum 20 GB |
-| CPU        | Dual-core processor |
-
-### Database Server
-
-| Requirement | Description |
-|------------|------------|
-| OS         | Ubuntu 22.04 LTS |
-| RAM        | Minimum 8 GB |
-| Disk       | Minimum 50 GB |
-| CPU        | Dual-core processor |
-
----
-
-##  Dependencies
-
-### Build-Time Dependencies
-
-| Dependency | Description |
-|-----------|------------|
-| Go        | Programming language used to develop the API. |
-| Make      | Automation tool used for build and execution commands. |
-
-### Run-Time Dependencies
-
-| Dependency | Description |
-|-----------|------------|
-| ScyllaDB  | Primary database storing employee records. |
-| Redis     | Optional caching layer for performance optimization. |
-| Prometheus| Metrics collection and monitoring system. |
-| Swagger   | API documentation and testing tool. |
-
----
-
-##  Important Endpoints & Ports
+## 6.2 Important Endpoints & Ports
 
 | Port / Endpoint | Description |
 |----------------|------------|
@@ -238,9 +219,9 @@ It follows a microservices architecture using **Redis (cache)** and **ScyllaDB (
 
 ---
 
-##  Monitoring
+## 6.3 Monitoring
 
-### Key Metrics
+### 6.3.1Key Metrics
 
 | Metric | Description |
 |--------|------------|
@@ -250,7 +231,7 @@ It follows a microservices architecture using **Redis (cache)** and **ScyllaDB (
 | Latency | Measures API response time (< 300ms recommended). |
 | Availability | Ensures uptime target of ≥ 99.9%. |
 
-### Log Files
+### 6.3.2 Log Files
 
 | Log File Path | Description |
 |--------------|------------|
@@ -260,7 +241,7 @@ It follows a microservices architecture using **Redis (cache)** and **ScyllaDB (
 
 ---
 
-##  High Availability & Disaster Recovery
+##  6.4 High Availability & Disaster Recovery
 
 | Strategy | Description |
 |----------|------------|
@@ -270,12 +251,12 @@ It follows a microservices architecture using **Redis (cache)** and **ScyllaDB (
 | Regular Backups | Protects against data loss during failures. |
 
 ---
-## Salary API
+## 7. Salary API
 
 The **Salary API** is a Spring Boot–based microservice responsible for managing employee salary records.  
 It is designed for scalability, observability, and high availability within a microservices ecosystem.
 
-##  System Requirements
+###  7.1 System Requirements
 
 | Requirement | Minimum |
 |-------------|---------|
@@ -286,16 +267,16 @@ It is designed for scalability, observability, and high availability within a mi
 
 ---
 
-###  Dependencies
+### 7.2 Dependencies
 
-#### Build-Time
+#### 7.2.1 Build-Time
 
 | Dependency | Version | Purpose |
 |------------|----------|----------|
 | Java | 17+ | Runtime for Spring Boot |
 | Maven | 3.8+ | Build & dependency management |
 
-#### Run-Time
+#### 7.2.2 Run-Time
 
 | Dependency | Version | Purpose |
 |------------|----------|----------|
@@ -304,7 +285,7 @@ It is designed for scalability, observability, and high availability within a mi
 
 ---
 
-###  Makefile
+###  7.3 Makefile
 
 **Purpose:** Automates build, test, and Docker operations.  
 Ensures consistency across developers and CI/CD pipelines using simple commands like:
@@ -318,7 +299,7 @@ make run
 
 ---
 
-### Architecture Workflow
+### 7.4 Architecture Workflow
 
 | Component          | Description |
 |-------------------|-------------|
@@ -330,13 +311,14 @@ make run
 | Migrations        | Migrations are used to create and update tables or schema in ScyllaDB. They run during deployment and are not part of the runtime request flow. |
 
 
-#### Architecture Diagram 
+#### 7.4.1 Architecture Diagram 
+
 <img width="700" height="700" alt="salary" src="https://github.com/user-attachments/assets/280b5057-162d-4c84-b34c-40574f3beecf" />
 
 
 ---
 
-##  Important Ports
+###  7.5 Important Ports
 
 | Port | Service |
 |------|---------|
@@ -346,15 +328,15 @@ make run
 
 ---
 
-##  Monitoring & Health
+### 7.6 Monitoring & Health
 
-### Actuator Endpoints
+#### 7.6.1 Actuator Endpoints
 
 - `/actuator/health`
 - `/actuator/metrics`
 - `/actuator/prometheus`
 
-### Key Metrics
+#### 7.6.2 Key Metrics
 
 | Metric | Threshold |
 |--------|------------|
@@ -366,7 +348,7 @@ make run
 
 ---
 
-##  Logging
+### 7.7 Logging
 
 Configured via `application.yml`.
 
@@ -386,7 +368,7 @@ logging:
 ```
 
 ---
-## Attendance API
+## 8 Attendance API
 
 ---
 
@@ -396,14 +378,14 @@ It is designed with a cloud-ready architecture using PostgreSQL for persistence 
 ---
 
 
-###  Purpose
+###  8.1 Purpose
 
-#### Business
+#### 8.1.1 Business
 - Manage employee attendance records.
 - Provide APIs to create, search, and retrieve attendance data.
 - Enable health and metrics monitoring.
 
-#### Technical
+#### 8.1.2 Technical
 - PostgreSQL for persistent storage.
 - Redis for caching.
 - Liquibase for database migrations.
@@ -411,7 +393,7 @@ It is designed with a cloud-ready architecture using PostgreSQL for persistence 
 
 ---
 
-###  System & Software Requirements
+###  8.2 System & Software Requirements
 
 | Component | Minimum |
 |------------|----------|
@@ -426,7 +408,7 @@ It is designed with a cloud-ready architecture using PostgreSQL for persistence 
 
 ---
 
-###  Architecture Workflow 
+###  8.3 Architecture Workflow 
 | Component             | Description |
 |----------------------|-------------|
 | API checks Redis     | When a request comes, the Attendance API first checks Redis to see if the data is already there. |
@@ -437,30 +419,30 @@ It is designed with a cloud-ready architecture using PostgreSQL for persistence 
 
 
 
-#### Architecture Diagram 
+#### 8.4 Architecture Diagram 
 <img width="700" height="700" alt="Screenshot from 2026-02-17 19-02-18" src="https://github.com/user-attachments/assets/b4eb8535-ff53-4047-8205-2724fa80061f" />
 
 ---
 
-### Components
+### 8.5 Components
 - Bastion Host (Public Subnet)
 - DB Server (PostgreSQL + Redis)
 - API Server (Attendance API)
 
-### Flow
+### 8.6 Flow
 Client → API (8080) → Redis (cache check)  
                      → PostgreSQL (on cache miss)
 
-### Monitoring Endpoints
+### 8.7 Monitoring Endpoints
 - `/api/v1/attendance/health`
 - `/api/v1/attendance/health/detail`
 - `/metrics`
 - `/apidocs` (Swagger)
 
 ---
-##  Dependencies
+###  8.8 Dependencies
 
-### Runtime
+#### 8.8.1 Runtime
 
 | Dependency | Purpose |
 |------------|----------|
@@ -469,7 +451,7 @@ Client → API (8080) → Redis (cache check)
 | Gunicorn | WSGI server |
 | Liquibase | Database migrations |
 
-### Other
+#### 8.8.2 Other
 
 | Tool | Purpose |
 |------|----------|
@@ -479,7 +461,7 @@ Client → API (8080) → Redis (cache check)
 
 ---
 
-##  Important Ports
+###  8.9 Important Ports
 
 | Port | Service |
 |------|----------|
@@ -490,22 +472,9 @@ Client → API (8080) → Redis (cache check)
 
 ---
 
-##  Deployment Summary
 
-### Infrastructure
-- VPC with Public (Bastion) & Private (DB/API) subnets
-- Secure Security Group rules between API and DB
-
-### Database Setup
-- Install PostgreSQL 16
-- Enable remote access
-- Create `attendance_db`
-- Install & configure Redis
-
----
-
-## Working of All APIs
-### Architecture Workflow 
+## 9. Working of All APIs
+### 9.1 Architecture Workflow 
 
 This architecture contains three APIs:
 
@@ -517,7 +486,7 @@ All APIs follow a **cache-first approach** using Redis to improve performance.
 
 ---
 
-### Employee API (`/api/v1/employee`)
+#### 9.1.1 employee API (`/api/v1/employee`)
 
 - The request goes to the Employee API.  
 - The API checks Redis (cache) for the data.  
@@ -528,7 +497,7 @@ All APIs follow a **cache-first approach** using Redis to improve performance.
 
 
 
-### Salary API (`/api/v1/salary`)
+#### 9.1.2 Salary API (`/api/v1/salary`)
 
 - The request goes to the Salary API.  
 - It first checks Redis.  
@@ -539,7 +508,7 @@ All APIs follow a **cache-first approach** using Redis to improve performance.
 
 
 
-### Attendance API (`/api/v1/attendance`)
+#### 9.1.3 Attendance API (`/api/v1/attendance`)
 
 - The request goes to the Attendance API.  
 - It checks Redis for cached data.  
@@ -549,14 +518,14 @@ All APIs follow a **cache-first approach** using Redis to improve performance.
 - The response is sent back to the user.  
 
 
-## Architecture Diagram 
-<img width="700" height="700" alt="frontend" src="https://github.com/user-attachments/assets/a142407c-28a6-44b8-a45e-74f9feaf4e33" />
+### 10.Architecture Diagram 
+<img width="800" height="800" alt="frontend" src="https://github.com/user-attachments/assets/a142407c-28a6-44b8-a45e-74f9feaf4e33" />
 
 ---
 
 
 
-## 12. Health Checks
+## 11. Health Checks
 
 | Service         | Health Endpoint                     | Port  | Purpose                |
 |----------------|--------------------------------------|-------|------------------------|
@@ -565,7 +534,7 @@ All APIs follow a **cache-first approach** using Redis to improve performance.
 | Salary API     | `/actuator/health`                   | 8082  | Spring Boot health     |
 | Frontend       | `http://<Frontend_Public_IP>`        | 80    | UI accessibility check |
  
-### Sample Commands
+#### 11.1 Sample Commands
 
 ```bash
 curl http://localhost:8080/api/v1/employee/health
@@ -577,19 +546,19 @@ curl http://localhost:8082/actuator/health
 
 
 
-## 15. Conclusion 
+## 12. Conclusion 
 This project demonstrates a structured, production-oriented microservices deployment on AWS using network segmentation, secure access controls, reverse proxy routing, and service-level isolation.
 
 ---
 
-## 16. Contact Information
+## 13. Contact Information
 | Name            | Team    | Contact Type | Details |
 | --------------- | ------- | ------------ | ------- |
 | Shreyas Awasthi | Saarthi | Email        | shreyas.awasthi.snaatak@mygurukulam.CO |
 
 ---
 
-## 17. References
+## 14. References
 
 | Description | Link |
 |-------------|------|
