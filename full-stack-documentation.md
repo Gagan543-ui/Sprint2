@@ -166,7 +166,6 @@ Route: 0.0.0.0/0 → NAT Gateway
 ---
 
 
-
 ## 6. Backend Services
 
 ### 6.1 Employee API
@@ -429,9 +428,13 @@ It is designed with a cloud-ready architecture using PostgreSQL for persistence 
 - DB Server (PostgreSQL + Redis)
 - API Server (Attendance API)
 
+---
+
 ### 8.6 Flow
 Client → API (8080) → Redis (cache check)  
                      → PostgreSQL (on cache miss)
+
+---                     
 
 ### 8.7 Monitoring Endpoints
 - `/api/v1/attendance/health`
@@ -459,8 +462,6 @@ Client → API (8080) → Redis (cache check)
 | pylint | Code linting |
 | default-jre | Required for Liquibase |
 
----
-
 ###  8.9 Important Ports
 
 | Port | Service |
@@ -484,8 +485,6 @@ This architecture contains three APIs:
 
 All APIs follow a **cache-first approach** using Redis to improve performance.
 
----
-
 #### 9.1.1 employee API (`/api/v1/employee`)
 
 - The request goes to the Employee API.  
@@ -506,8 +505,6 @@ All APIs follow a **cache-first approach** using Redis to improve performance.
 - The result is cached in Redis.  
 - The response is sent to the user.  
 
-
-
 #### 9.1.3 Attendance API (`/api/v1/attendance`)
 
 - The request goes to the Attendance API.  
@@ -519,12 +516,9 @@ All APIs follow a **cache-first approach** using Redis to improve performance.
 
 
 ### 10.Architecture Diagram 
-<img width="800" height="800" alt="frontend" src="https://github.com/user-attachments/assets/a142407c-28a6-44b8-a45e-74f9feaf4e33" />
+<img width="800" height="800" alt="frontend" src="https://github.com/user-attachments/assets/fc32e57e-387b-4ea5-8863-b6b01d983eab" />
 
 ---
-
-
-
 ## 11. Health Checks
 
 | Service         | Health Endpoint                     | Port  | Purpose                |
@@ -544,7 +538,7 @@ curl http://localhost:8082/actuator/health
 
 ---
 
-
+---
 
 ## 12. Conclusion 
 This project demonstrates a structured, production-oriented microservices deployment on AWS using network segmentation, secure access controls, reverse proxy routing, and service-level isolation.
